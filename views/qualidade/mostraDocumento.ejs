@@ -9,23 +9,28 @@
         border: 2px solid black; /* 2px width and black color */
         padding: 20px; /* Add some padding for content spacing */
     }
+
+    img{
+      width: 60%;
+    }
 </style>
 
 <body>
-    <div class="black-border mt-2">
 
-        <form action="/salvar-novo-documento" method="POST">
+        <form action="/salvar-documento-editado/<%=doc.id%>" method="POST">
 
-        <div class="row">
-            <div class="col">Logo</div>
+        <div class="row mt-2">
+            <div class="col"><img src="https://www.fibracem.com/wp-content/uploads/2020/11/LOGO-FIBRACEM-5.png" alt=""></div>
             <div class="col">
-                <h1>Controle de Retrabalho/Reprocesso</h1>
+                <h3 class="mt-4">Controle de Retrabalho/Reprocesso</h3>
             </div>
             <div class="col">
                 <div class="row" style="float: right;">
                     <div class="col">
-                        <input type="text" name="tipo_doc" id="" value="<%=doc.tipo_doc%>" readonly>
-                        <br>
+                      <div class="form-floating">
+                        <input type="text" class="form-control" id="tipo_doc" value="<%=doc.tipo_doc%>" name="tipo_doc" readonly>
+                        <label for="tipo_doc">Documento:</label>
+                      </div>
                         <%const currentDate = new Date();%>
                         Data: <%=currentDate.getDate()%> / <%=currentDate.getMonth() + 1%> / <%=currentDate.getFullYear()%>
                         <br>
@@ -35,86 +40,123 @@
             </div>
         </div>
 
-        <hr>
-        <div class="row" style="text-align: center;"><h3 style="font-size: 25px;">QUALIDADE:</h3></div>
+        <div class="row mt-3" style="text-align: center;"><h3 style="font-size: 25px;">QUALIDADE:</h3></div>
 
-        <div class="table-wrapper table-responsive table-striped mb-4">
-            <table class="fl-table" id="myTable">
-              <thead>
-                <tr style="height: 25px">
-                  <th>Data</th>
-                  <th>Inspetor</th>
-                  <th>Código do Produto</th>
-                  <th>Descrição</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>
-                    <input type="date" name="data" id="" value="<%=doc.data%>" readonly>
-                  </td>
-                  <td>
-                    <select name="inspetor" id="">
-                        <option value="<%=doc.inspetor%>"><%=doc.inspetor%></option>
-                    </select>
-                  </td>
-                  <td>
-                    <input type="text" name="cod_prod" id="" value="<%=doc.cod_prod%>">
-                  </td>
-                  <td>
-                    <textarea name="descri" id="" cols="60" rows="1">
-                        <%=doc.descri%>
-                    </textarea>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
+        <div class="row">
+          <div class="col">
+            <div class="form-floating">
+              <input type="date" class="form-control" id="data" value="<%=doc.data%>" name="data">
+              <label for="data">Data:</label>
+            </div>
           </div>
-
-
-          <div class="table-wrapper table-responsive table-striped mb-4">
-            <table class="fl-table" id="myTable">
-              <thead>
-                <tr style="height: 25px">
-                  <th>Lote/ODF</th>
-                  <th>Lance</th>
-                  <th>Quantidade/Metragem</th>
-                  <th>CPNC Nº</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>
-                    <input type="text" name="lote_odf" id="" value="<%=doc.lote_odf%>">
-                  </td>
-                  <td>
-                    <input type="text" name="lance" id="" value="<%=doc.lance%>">
-                  </td>
-                  <td>
-                    <input type="text" name="quantidade_metragem" id="" value="<%=doc.quantidade_metragem%>">
-                  </td>
-                  <td>
-                    <input type="text" name="cpnc_numero" id="" value="<%=doc.cpnc_numero%>">
-                  </td>
-                </tr>
-              </tbody>
-            </table>
+          <div class="col">
+            <div class="form-floating">
+              <select class="form-select" id="inspetor" aria-label="Floating label select example" name="inspetor">
+                <option selected value="<%=doc.inspetor%>"><%=doc.inspetor%></option>
+              </select>
+              <label for="inspetor">Inspetor</label>
+            </div>
           </div>
+          <div class="col">
+            <div class="form-floating">
+              <input type="text" class="form-control" id="cod_prod" name="cod_prod" placeholder="Código do Produto:" value="<%=doc.cod_prod%>">
+              <label for="cod_prod">Código do Produto:</label>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="form-floating">
+              <textarea class="form-control" name="descri" placeholder="Descrição:" id="descri" style="height: 58px">
+                <%=doc.descri%>
+              </textarea>
+              <label for="descri">Descrição:</label>
+            </div>
+          </div>
+        </div>
 
-          <hr>
-          <div class="row">
+        <div class="row mt-2">
+          <div class="col">
+            <div class="form-floating">
+              <input type="text" class="form-control" id="lote_odf" name="lote_odf" placeholder="Lote/ODF:" value="<%=doc.lote_odf%>">
+              <label for="lote_odf">Lote/ODF:</label>
+            </div>
+          </div>
+          <div class="col">
+            <div class="form-floating">
+              <input type="text" class="form-control" id="lance" name="lance" placeholder="Lance:" value="<%=doc.lance%>">
+              <label for="lance">Lance:</label>
+            </div>
+          </div>
+          <div class="col">
+            <div class="form-floating">
+              <input type="text" class="form-control" value="<%=doc.quantidade_metragem%>" id="quantidade_metragem" name="quantidade_metragem" placeholder="Quantidade/Metragem:">
+              <label for="quantidade_metragem">Quantidade/Metragem:</label>
+            </div>
+          </div>
+          <div class="col">
+            <div class="form-floating">
+              <input type="text" class="form-control" id="cpnc_numero" name="cpnc_numero" placeholder="CPNC/Número:" value="<%=doc.cpnc_numero%>">
+              <label for="cpnc_numero">CPNC/Número:</label>
+            </div>
+          </div>
+        </div>
+
+          <div class="row mt-2">
             <div class="col">
-                <textarea name="motivo_cpnc" id="" rows="2" style="width: 100%;" placeholder="Motivo da NC:"></textarea>
+              <div class="form-floating">
+                <textarea class="form-control" name="motivo_nc" placeholder="Motivo da NC:" id="motivo_nc" style="height: 58px">
+                  <%=doc.motivo_nc%>
+                </textarea>
+                <label for="motivo_nc">Motivo da NC:</label>
+              </div>
+            </div>
+          </div>
+
+          <div class="row mt-4">
+            <div class="col">
+              <h3 style="text-align: center;">ENGENHARIA DE PROCESSOS</h3>
             </div>
           </div>
 
           <div class="row">
             <div class="col">
-                <button type="submit">Finalizar</button>
+              <div class="form-floating">
+                <input type="text" class="form-control" id="tempo_previsto" name="tempo_previsto" placeholder="Tempo Previsto:" value="<%=doc.tempo_previsto%>">
+                <label for="tempo_previsto">Tempo Previsto:</label>
+              </div>
+            </div>
+            <div class="col">
+              <div class="form-floating">
+                <select class="form-select" id="edp_responsavel" aria-label="Floating label select example" name="edp_responsavel">
+                  <option selected value="<%=doc.edp_responsavel%>"><%=doc.edp_responsavel%></option>
+                </select>
+                <label for="edp_responsavel">Responsável:</label>
+              </div>
+            </div>
+            <div class="col">
+              <div class="form-floating">
+                <input type="date" class="form-control" id="edp_data" name="edp_data" placeholder="Tempo Previsto:" value="<%=doc.edp_data%>">
+                <label for="edp_data">Data:</label>
+              </div>
+            </div>
+          </div>
+          <div class="row mt-2">
+            <div class="col">
+              <div class="form-floating">
+                <textarea class="form-control" name="instrucao_reprocesso" placeholder="Instrução Reprocesso:" id="instrucao_reprocesso" style="height: 58px">
+                  <%=doc.instrucao_reprocesso%>
+                </textarea>
+                <label for="instrucao_reprocesso">Instrução Reprocesso::</label>
+              </div>
+            </div>
+          </div>
+
+
+          <div class="row mt-3">
+            <div class="col" style="text-align: center;">
+                <button type="submit" class="button-8" style="width: 15%;">Finalizar</button>
             </div>
           </div>
         </form>
-    </div>
 </body>
 
 <script type="text/javascript" src="/js/carregador.js"></script>

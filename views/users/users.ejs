@@ -11,7 +11,7 @@
   <div style="padding-top: 1.5%">
     <div class="row">
       <div class="col-md-4">
-        <%if(user.admin == 1){%>
+        <%if(logado.admin == 1){%>
           <a class="button-8 mb-2" href="/usuarios/novo-usuario">Novo usuário</a>
           <a class="button-8 mb-2" href="/usuarios/inativos">Inativos</a>
         <%}%>
@@ -48,7 +48,7 @@
             <th>E-mail</th>
             <th>Admin</th>
             <th>DPO</th>
-            <%if(user.admin == 1){%>
+            <%if(logado.admin == 1){%>
             <th>Ações</th>
             <%}%>
           </tr>
@@ -68,7 +68,7 @@
             </td>
             <td>
               <p>
-                <%if(user.admin == 1){%>
+                <%if(logado.admin == 1){%>
                   Sim
                 <%}else{%>
                   Não
@@ -84,7 +84,7 @@
                 <%}%>
               </p>
             </td>
-            <%if(user.admin == 1){%>
+            <%if(logado.admin == 1){%>
             <td style="padding-bottom: 15px;">
               <a class="button-8" href="/usuarios/editar/<%=user.id%>">Editar</a>
               <a class="button-8" href="/usuarios/inativar/<%=user.id%>">Inativar</a>

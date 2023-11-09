@@ -9,7 +9,7 @@ const session = require("express-session");
 require('./auth.js')(passport);
 const login = require("./routes/login.js");
 const users = require("./routes/users.js");
-const lgpd = require("./routes/lgpd.js");
+const qualidade = require("./routes/qualidadeRoute.js");
 dotenv.config();
 const app = express();
 
@@ -49,7 +49,7 @@ const checkUser = (req, res, next)=>{
       } else {
         let user = await db.getUserByIdForJwt(decodedToken.id);
         if(user){
-          res.locals.user = user;
+          res.locals.logado = user;
           next();
         }else{
           res.send("Usuário inativado")
@@ -79,7 +79,7 @@ app.get("/", async(req, res)=>{
 app.use("*", checkUser)
 app.use("/login", login);
 app.use("/usuarios", authenticationMiddleware, users);
-app.use("/", authenticationMiddleware, lgpd);
+app.use("/", authenticationMiddleware, qualidade);
 
 app.listen(process.env.PORT, function () {
   console.log("Node.js funcionando na porta " + process.env.PORT);

@@ -22,30 +22,51 @@ async function connect(){
 
 connect();
 
-let showDocs = async()=>{
+const showDocs = async()=>{
     const conn = await connect();
     const [values] = await conn.query('select * from docspro.docs_qualidade');
     conn.end();
     return values
 }
 
-let insertDocs = async(tipo_doc, data, inspetor, cod_prod, descri, lote_odf, lance, quantidade_metragem, cpnc_numero, motivo_nc)=>{
+const insertDocs = async(tipo_doc, data, inspetor, cod_prod, descri, lote_odf, lance, quantidade_metragem, cpnc_numero, motivo_nc)=>{
     const conn = await connect();
-    await conn.query('INSERT INTO docspro.docs_qualidade (tipo_doc, data, inspetor, cod_prod, descri, lote_odf, lance, quantidade_metragem, cpnc_numero, motivo_cpnc) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
+    await conn.query('INSERT INTO docspro.docs_qualidade (tipo_doc, data, inspetor, cod_prod, descri, lote_odf, lance, quantidade_metragem, cpnc_numero, motivo_nc) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
     [tipo_doc, data, inspetor, cod_prod, descri, lote_odf, lance, quantidade_metragem, cpnc_numero, motivo_nc]);
     conn.end();
 }
 
-let showDoc = async()=>{
+const showDoc = async(id)=>{
     const conn = await connect();
-    const [values] = await conn.query('select * from docspro.docs_qualidade where id = 1');
+    const [values] = await conn.query('select * from docspro.docs_qualidade where id = ?', [id]);
     conn.end();
     return values
+}
+
+const countDocs = async()=>{
+    const conn = await connect();
+    const [values] = await conn.query('select count(id) as contagem from docspro.docs_qualidade');
+    conn.end();
+    return values[0].contagem
+}
+
+const updateDoc = async()=>{
+    const conn = await connect();
+    await conn.query("update docspro.docs_qualidade set tempo_previsto = ?, instrucao_reprocesso = ?, edp_responsavel = ?, edp_data = ? where id = ?", [
+        tempo_previsto,
+        instrucao_reprocesso,
+        edp_responsavel,
+        edp_data,
+        parameter
+    ]);
+    conn.end();
 }
 
 
 module.exports = {
     insertDocs,
     showDocs,
-    showDoc
+    showDoc,
+    countDocs,
+    updateDoc
 }

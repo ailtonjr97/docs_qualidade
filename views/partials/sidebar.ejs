@@ -28,25 +28,7 @@
                       Home
                     </span>
                   </a>
-                  <a href="/novo-documento" class="nav_link">
-                    <i class="fa-solid fa-file-circle-plus" style="padding-left: 4px;"></i>
-                    <span class="nav_name">
-                      Novo Documento
-                    </span>
-                  </a>
-                  <a href="/todos-os-documentos" class="nav_link">
-                    <i class="fa-solid fa-file" style="padding-left: 4px;"></i>
-                    <span class="nav_name">
-                      Documentos
-                    </span>
-                  </a>
-                  <a href="/setores" class="nav_link">
-                    <i class="fa-solid fa-sitemap"></i>
-                    <span class="nav_name">
-                      Setores
-                    </span>
-                  </a>
-                  <%if (user.admin == "1") {%>
+                  <%if (logado.admin == "1") {%>
                   <a href="/usuarios" class="nav_link">
                     <i class="fa-solid fa-user" style="padding-left: 2px;"></i>
                     <span class="nav_name">

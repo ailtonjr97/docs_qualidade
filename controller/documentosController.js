@@ -1,10 +1,11 @@
 const path = require("path")
-const DbDocs = require("../db/qualidade.js")
+const DbDocs = require("../db/qualidadeModel.js")
 
 const docsQualidade = async(req, res)=>{
     try {
         res.render("qualidade/home", {
-            docs: await DbDocs.showDocs()
+            docs: await DbDocs.showDocs(),
+            contagem: await DbDocs.countDocs()
         });
     } catch (error) {
         console.log(error);
@@ -63,7 +64,7 @@ const salvarNovoDocumento = async (req, res)=>{
 
 const mostraDocumento = async(req, res)=>{
     try {
-        const doc = await DbDocs.showDoc()
+        const doc = await DbDocs.showDoc(req.params.id)
         res.render("qualidade/mostraDocumento", {
             doc: doc[0]
         })
@@ -73,11 +74,28 @@ const mostraDocumento = async(req, res)=>{
     }
 }
 
+const salvaDocEditado = async(req, res)=>{
+    try {
+        await DbDocs.updateDoc(
+            req.body.tempo_previsto,
+            req.body.instrucao_reprocesso,
+            req.body.edp_responsavel,
+            req.body.edp_data,
+            req.params.id,
+        );
+
+        
+    } catch (error) {
+        
+    }
+}
+
 module.exports = {
     docsQualidade,
     newDocsQualidade,
     renderizaArquivo,
     editarNovoDocumento,
     salvarNovoDocumento,
-    mostraDocumento
+    mostraDocumento,
+    salvaDocEditado
 }
