@@ -1,0 +1,53 @@
+<button  id='btn-modal-insert-1' type="button" class="button-8" id="result">Novo Tipo</button>
+
+
+    <div class="modal-dialog modal-lg" id='modal-insert-1'>
+        <div class="modal-content">
+            <form action="/lgpd/cadastro-grupo-documento" method="post">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Cadastro novo tipo de documento</h5>
+              </div>
+             
+            <div class="modal-body">
+                
+                  <div class="form-group">
+                    <label for="recipient-name" class="col-form-label">Nome:</label>
+                    <input type="text" name="nome" class="form-control" id="recipient-name">
+                  </div>
+
+                  <div class="form-group">
+                    <label for="recipient-name" class="col-form-label">Descricao:</label>
+                    <input type="text" name="descricao" class="form-control" id="recipient-name">
+                  </div>
+                  <div class="form-group">
+                    <label for="recipient-name" class="col-form-label">Validade:</label>
+                    <input type="number" name="validade" class="form-control" id="recipient-name">
+                  </div>
+                  <div class="form-group">
+                    <label for="recipient-name" class="col-form-label">Setor</label>
+                    <select class="form-control" name="setor" id="recipient-name">
+                        <option value='1'>TI</option>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label for="recipient-name" class="col-form-label">Grupo Segurança</label>
+                    <select class="form-control" name="grupo_seguranca" id="recipient-name">
+                        <option value='1'>Contedo sensível lei tal norma tal</option>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label for="recipient-name" class="col-form-label">Imagem de exemplo</label>
+                    <input type="file" name="img_exemplo" class="form-control" id="recipient-name">
+                  </div>
+
+                
+            </div>  
+
+            <div class="modal-footer">
+                <button type="button" id="btn-feccha-modal-insert-1" class="button-8" style="width: 120px;" >Fechar</button>
+                <button type="submit" id='botaoSalva' class="button-8" style="width: 120px;">Salvar</button>
+            </div>
+        </form>
+        </div>
+    </div>
+
