@@ -11,7 +11,7 @@
   <div style="padding-top: 1.5%">
     <div class="row">
       <div class="col-md-4">
-        <%if(logado.admin == 1){%>
+        <%if(logado.admin == 1 || logado.setor == "qualidade"){%>
           <a class="button-8 mb-2" href="/usuarios/novo-usuario">Novo usuário</a>
           <a class="button-8 mb-2" href="/usuarios/inativos">Inativos</a>
         <%}%>

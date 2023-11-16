@@ -15,7 +15,11 @@ const docsQualidade = async(req, res)=>{
 
 const newDocsQualidade = async(req, res)=>{
     try {
-        res.render("qualidade/novoDocumento");
+        if(res.locals.logado.setor != "qualidade"){
+            res.send("Acesso exclusivo da qualidade.");
+        }else{
+            res.render("qualidade/novoDocumento");
+        }
     } catch (error) {
         console.log(error);
         res.render("error");
@@ -33,7 +37,11 @@ const renderizaArquivo = async(req, res)=>{
 
 const editarNovoDocumento = async(req, res)=>{
     try {
-        res.render("qualidade/editarNovoDocumento");
+        if(res.locals.logado.setor != "qualidade"){
+            res.send("Acesso exclusivo da qualidade.");
+        }else{
+            res.render("qualidade/editarNovoDocumento");
+        }
     } catch (error) {
         console.log(error);
         res.render("error");
@@ -42,7 +50,6 @@ const editarNovoDocumento = async(req, res)=>{
 
 const salvarNovoDocumento = async (req, res)=>{
     try {
-        console.log(req.body)
         await DbDocs.insertDocs(
             req.body.tipo_doc,
             req.body.data,
@@ -55,7 +62,7 @@ const salvarNovoDocumento = async (req, res)=>{
             req.body.cpnc_numero,
             req.body.motivo_nc,
         )
-        res.redirect("/documentos-qualidade")
+        res.redirect("/documentos-qualidade");
     } catch (error) {
         console.log(error);
         res.render("error");
@@ -74,19 +81,38 @@ const mostraDocumento = async(req, res)=>{
     }
 }
 
+
 const salvaDocEditado = async(req, res)=>{
     try {
+        console.log(req.body)
         await DbDocs.updateDoc(
             req.body.tempo_previsto,
             req.body.instrucao_reprocesso,
             req.body.edp_responsavel,
             req.body.edp_data,
+            req.body.pcp_odf_retrabalho,
+            req.body.pcp_responsavel,
+            req.body.pcp_data,
+            req.body.pcp_obs,
+            req.body.prod_tempo_realizado,
+            req.body.prod_insumos,
+            req.body.prod_sucata,
+            req.body.prod_obs,
+            req.body.prod_responsavel,
+            req.body.prod_data,
+            req.body.prod_status,
+            req.body.quali_parecer,
+            req.body.quali_responsavel,
+            req.body.quali_data,
+            req.body.quali_status,
+            req.body.geral_obs,
             req.params.id,
         );
 
-        
+        res.redirect("/documentos-qualidade");
     } catch (error) {
-        
+        console.log(error);
+        res.render("error");
     }
 }
 

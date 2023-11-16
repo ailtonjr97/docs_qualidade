@@ -16,9 +16,11 @@
           <span class="counter-value"><%=contagem%></span>
           resultados
           </button>
+          <%if(logado.setor == "qualidade"){%>
           <a href="/novo-documento-qualidade">
             <button type="button" class="button-8" id="result" style="float: right; margin-right: 1%;">Novo</button>
           </a>
+          <%}%>
       </div>
     </div>
     <div class="row mb-3">
