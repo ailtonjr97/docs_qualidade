@@ -43,6 +43,13 @@ const showDoc = async(id)=>{
     return values
 }
 
+const camposVaziosEdp = async(id)=>{
+    const conn = await connect();
+    const [values] = await conn.query('select edp_responsavel, edp_data, tempo_previsto, instrucao_reprocesso from docspro.docs_qualidade where id = ?', [id]);
+    conn.end();
+    return values
+}
+
 const countDocs = async()=>{
     const conn = await connect();
     const [values] = await conn.query('select count(id) as contagem from docspro.docs_qualidade');
@@ -106,5 +113,6 @@ module.exports = {
     showDocs,
     showDoc,
     countDocs,
-    updateDoc
+    updateDoc,
+    camposVaziosEdp
 }

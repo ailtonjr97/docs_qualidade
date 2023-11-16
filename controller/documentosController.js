@@ -71,6 +71,7 @@ const salvarNovoDocumento = async (req, res)=>{
 
 const mostraDocumento = async(req, res)=>{
     try {
+        console.log(await (DbDocs.camposVaziosEdp(req.params.id)))
         const doc = await DbDocs.showDoc(req.params.id)
         res.render("qualidade/mostraDocumento", {
             doc: doc[0]
