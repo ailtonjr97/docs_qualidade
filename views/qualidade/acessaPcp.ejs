@@ -1,0 +1,85 @@
+<%- include('../partials/sidebar') %>
+<link rel="stylesheet" href="/css/table.css" />
+<link rel="stylesheet" href="/css/button8.css" />
+<link rel="stylesheet" href="/css/loading.css" />
+
+
+<div class="row mt-4">
+    <div class="col">
+      <h3 style="text-align: center;">PCP</h3>
+    </div>
+</div>
+
+<form action="/atualiza-pcp/<%=camposPcp.id%>" method="post">
+<div class="row">
+    <div class="col">
+        <div class="form-floating">
+            <input name="pcp_odf_retrabalho" type="text" class="form-control" id="pcp_odf_retrabalho" placeholder="ODF retrabalho:" value="<%=camposPcp.pcp_odf_retrabalho%>">
+            <label for="pcp_odf_retrabalho">ODF retrabalho:</label>
+        </div>
+    </div>
+    <div class="col">
+        <div class="form-floating">
+            <select name="pcp_responsavel" class="form-select" id="pcp_responsavel" aria-label="Floating label select example">
+
+            <%if(camposPcp.pcp_responsavel == null || camposPcp.pcp_responsavel == ""){%>
+                <option selected value="Não preenchido">Não preenchido</option>
+                <%for(let i = 0; i < respPcp.length; i++){%>
+                    <option value="<%=respPcp[i].name%>"><%=respPcp[i].name%></option>
+                <%}%>
+            <%}%>
+
+            <%if(camposPcp.pcp_responsavel != ""){%>
+                <option value="<%=camposPcp.pcp_responsavel%>"><%=camposPcp.pcp_responsavel%></option>
+            <%}%>
+
+            </select>
+        <label for="pcp_responsavel">Responsável:</label>
+        </div>
+    </div>
+    <div class="col">
+        <div class="form-floating">
+            <input name="pcp_data" type="date" class="form-control" id="pcp_data" placeholder="Data:" value="<%=camposPcp.pcp_data%>">
+            <label for="pcp_data">Data:</label>
+          </div>
+    </div>
+</div>
+<div class="row mt-2">
+    <div class="col">
+        <div class="form-floating">
+            <input name="pcp_obs" type="text" class="form-control" id="pcp_obs" placeholder="Observações do PCP:" value="<%=camposPcp.pcp_obs%>">
+            <label for="pcp_obs">Observações do PCP:</label>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-4">
+    <div class="col" style="text-align: center;">
+        <button type="submit" id="envia" class="btn button-8" style="width: 15%;">Enviar</button>
+    </div>
+</div>
+
+</form>
+
+<script type="text/javascript">
+    if("<%=camposPcp.pcp_odf_retrabalho%>" != ""){
+        document.getElementById("pcp_odf_retrabalho").readOnly = true
+    }
+
+    if("<%=camposPcp.edp_data%>" != ""){
+        document.getElementById("edp_data").readOnly = true
+    }
+
+    if("<%=camposPcp.pcp_data%>" != ""){
+        document.getElementById("pcp_data").readOnly = true
+    }
+
+    if("<%=camposPcp.pcp_obs%>" != ""){
+        document.getElementById("pcp_obs").readOnly = true;
+    }
+
+
+</script>
+<script type="text/javascript" src="/js/carregador.js"></script>
+<script type="text/javascript" src="/js/confirmation.js"></script>
+<script type="text/javascript" src="/js/procura.js"></script>

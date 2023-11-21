@@ -10,7 +10,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
     if(toggle && nav && bodypd && headerpd){
         toggle.addEventListener('click', ()=>{
         // show navbar
-        nav.classList.add('show')
+        nav.classList.add('showSd')
         // change icon
         toggle.classList.add('bx-x')
         // add padding to body
@@ -23,7 +23,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
         if(toggle && nav && bodypd && headerpd){
             document.getElementsByClassName('l-navbar')[0].addEventListener('mouseleave', ()=>{
             // show navbar
-            nav.classList.remove('show')
+            nav.classList.remove('showSd')
             // change icon
             toggle.classList.remove('bx-x')
             // add padding to body

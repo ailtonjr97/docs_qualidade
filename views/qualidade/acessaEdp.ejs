@@ -1,0 +1,84 @@
+<%- include('../partials/sidebar') %>
+<link rel="stylesheet" href="/css/table.css" />
+<link rel="stylesheet" href="/css/button8.css" />
+<link rel="stylesheet" href="/css/loading.css" />
+
+
+<div class="row mt-4">
+    <div class="col">
+      <h3 style="text-align: center;">Engenharia de Processos</h3>
+    </div>
+</div>
+
+<form action="/atualiza-edp/<%=camposEdp.id%>" method="post">
+<div class="row">
+    <div class="col">
+        <div class="form-floating">
+            <input name="tempo_previsto" type="text" class="form-control" id="tempo_previsto" placeholder="Tempo Previsto:" value="<%=camposEdp.tempo_previsto%>">
+            <label for="tempo_previsto">Tempo previsto:</label>
+        </div>
+    </div>
+    <div class="col">
+        <div class="form-floating">
+            <select name="edp_responsavel" class="form-select" id="edp_responsavel" aria-label="Floating label select example">
+
+            <%if(camposEdp.edp_responsavel == null || camposEdp.edp_responsavel == ""){%>
+                <option selected value="Não preenchido">Não preenchido</option>
+                <%for(let i = 0; i < respsEdp.length; i++){%>
+                    <option value="<%=respsEdp[i].name%>"><%=respsEdp[i].name%></option>
+                <%}%>
+            <%}%>
+
+            <%if(camposEdp.edp_responsavel != ""){%>
+                <option value="<%=camposEdp.edp_responsavel%>"><%=camposEdp.edp_responsavel%></option>
+            <%}%>
+
+            </select>
+        <label for="edp_responsavel">Responsável:</label>
+        </div>
+    </div>
+    <div class="col">
+        <div class="form-floating">
+            <input name="edp_data" type="date" class="form-control" id="edp_data" placeholder="Data:" value="<%=camposEdp.edp_data%>">
+            <label for="edp_data">Data:</label>
+          </div>
+    </div>
+</div>
+<div class="row mt-2">
+    <div class="col">
+        <div class="form-floating">
+            <input name="instrucao_reprocesso" type="text" class="form-control" id="instrucao_reprocesso" placeholder="Instrução Reprocesso:" value="<%=camposEdp.instrucao_reprocesso%>">
+            <label for="instrucao_reprocesso">Instrução Reprocesso:</label>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-4">
+    <div class="col" style="text-align: center;">
+        <button type="submit" id="envia" class="btn button-8" style="width: 15%;">Enviar</button>
+    </div>
+</div>
+
+</form>
+
+<script type="text/javascript">
+    if("<%=camposEdp.tempo_previsto%>" != ""){
+        document.getElementById("tempo_previsto").readOnly = true
+    }
+
+    if("<%=camposEdp.edp_data%>" != ""){
+        document.getElementById("edp_data").readOnly = true
+    }
+
+    if("<%=camposEdp.instrucao_reprocesso%>" != ""){
+        document.getElementById("instrucao_reprocesso").readOnly = true
+    }
+
+    if("<%=camposEdp.tempo_previsto%>" != ""){
+        document.getElementById("envia").style.display = "none";
+    }
+</script>
+
+<script type="text/javascript" src="/js/carregador.js"></script>
+<script type="text/javascript" src="/js/confirmation.js"></script>
+<script type="text/javascript" src="/js/procura.js"></script>

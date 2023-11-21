@@ -33,7 +33,8 @@ let createUser = async (req, res)=>{
             name: req.body.name,
             email: req.body.email,
             password: bcrypt.hashSync(req.body.password), salt: 10,
-            active: 1
+            active: 1,
+            setor: req.body.setor
         });
         res.redirect("/usuarios");
     } catch (error) {

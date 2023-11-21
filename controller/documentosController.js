@@ -1,5 +1,6 @@
 const path = require("path")
 const DbDocs = require("../db/qualidadeModel.js")
+const Usuarios = require("../db/users.js")
 
 const docsQualidade = async(req, res)=>{
     try {
@@ -37,10 +38,13 @@ const renderizaArquivo = async(req, res)=>{
 
 const editarNovoDocumento = async(req, res)=>{
     try {
+        const inspetores = await Usuarios.responsaveis("qualidade")
         if(res.locals.logado.setor != "qualidade"){
             res.send("Acesso exclusivo da qualidade.");
         }else{
-            res.render("qualidade/editarNovoDocumento");
+            res.render("qualidade/editarNovoDocumento", {
+                inspetores: inspetores
+            });
         }
     } catch (error) {
         console.log(error);
@@ -71,11 +75,21 @@ const salvarNovoDocumento = async (req, res)=>{
 
 const mostraDocumento = async(req, res)=>{
     try {
-        console.log(await (DbDocs.camposVaziosEdp(req.params.id)))
+/*         for (const [key, value] of Object.entries(camposVaziosEdp[0])) {
+            if(value == ""){
+                camposVaziosEdp = true;
+                break;
+            }else{
+                camposVaziosEdp = false
+            }
+        } */
+
         const doc = await DbDocs.showDoc(req.params.id)
+
         res.render("qualidade/mostraDocumento", {
-            doc: doc[0]
+            doc: doc[0],
         })
+
     } catch (error) {
         console.log(error);
         res.render("error");
@@ -85,7 +99,7 @@ const mostraDocumento = async(req, res)=>{
 
 const salvaDocEditado = async(req, res)=>{
     try {
-        console.log(req.body)
+        console.log("EDP RESPONSAVEL: " + req.body.edp_responsavel)
         await DbDocs.updateDoc(
             req.body.tempo_previsto,
             req.body.instrucao_reprocesso,
@@ -117,6 +131,134 @@ const salvaDocEditado = async(req, res)=>{
     }
 }
 
+const acessaEdp = async(req, res)=>{
+    try {
+        const respEdp = await Usuarios.responsaveis("edp");
+        const camposEdp = await DbDocs.camposEdp(req.params.id)
+        res.render("qualidade/acessaEdp", {
+            camposEdp: camposEdp[0],
+            respsEdp: respEdp
+        })
+    } catch (error) {
+        console.log(error);
+        res.render("error");
+    }
+}
+
+const atualizaEdp = async(req, res)=>{
+    try {
+        await DbDocs.atualizaEdp(
+            req.body.tempo_previsto,
+            req.body.instrucao_reprocesso,
+            req.body.edp_responsavel,
+            req.body.edp_data,
+            parseInt(req.params.id)
+        )
+
+        res.redirect("/documentos-qualidade");
+    } catch (error) {
+        console.log(error);
+        res.render("error");
+    }
+}
+
+const acessaPcp = async(req, res)=>{
+    try {
+        const respPcp = await Usuarios.responsaveis("pcp");
+        const camposPcp = await DbDocs.camposPcp(req.params.id)
+        res.render("qualidade/acessaPcp", {
+            camposPcp: camposPcp[0],
+            respPcp: respPcp
+        })
+    } catch (error) {
+        console.log(error);
+        res.render("error");
+    }
+}
+
+const atualizaPcp = async(req, res)=>{
+    try {
+        await DbDocs.atualizaPcp(
+            req.body.pcp_odf_retrabalho,
+            req.body.pcp_responsavel,
+            req.body.pcp_data,
+            req.body.pcp_obs,
+            parseInt(req.params.id)
+        )
+
+        res.redirect("/documentos-qualidade");
+    } catch (error) {
+        console.log(error);
+        res.render("error");
+    }
+}
+
+const acessaProd = async(req, res)=>{
+    try {
+        const respProd = await Usuarios.responsaveis("producao");
+        const camposProd = await DbDocs.camposProd(req.params.id)
+        res.render("qualidade/acessaProd", {
+            camposProd: camposProd[0],
+            respProd: respProd
+        })
+    } catch (error) {
+        console.log(error);
+        res.render("error");
+    }
+}
+
+const atualizaProd = async(req, res)=>{
+    try {
+        await DbDocs.atualizaProd(
+            req.body.prod_tempo_realizado,
+            req.body.prod_insumos,
+            req.body.prod_sucata,
+            req.body.prod_obs,
+            req.body.prod_responsavel,
+            req.body.prod_data,
+            req.body.prod_status,
+            parseInt(req.params.id)
+        )
+
+        res.redirect("/documentos-qualidade");
+    } catch (error) {
+        console.log(error);
+        res.render("error");
+    }
+}
+
+const acessaQuali = async(req, res)=>{
+    try {
+        const respQuali = await Usuarios.responsaveis("qualidade");
+        const camposQuali = await DbDocs.camposQuali(req.params.id)
+        res.render("qualidade/acessaQuali", {
+            camposQuali: camposQuali[0],
+            respQuali: respQuali
+        })
+    } catch (error) {
+        console.log(error);
+        res.render("error");
+    }
+}
+
+const atualizaQuali = async(req, res)=>{
+    try {
+        console.log(req.body)
+        await DbDocs.atualizaQuali(
+            req.body.quali_parecer,
+            req.body.quali_responsavel,
+            req.body.quali_data,
+            req.body.quali_status,
+            parseInt(req.params.id)
+        )
+
+        res.redirect("/documentos-qualidade");
+    } catch (error) {
+        console.log(error);
+        res.render("error");
+    }
+}
+
 module.exports = {
     docsQualidade,
     newDocsQualidade,
@@ -124,5 +266,13 @@ module.exports = {
     editarNovoDocumento,
     salvarNovoDocumento,
     mostraDocumento,
-    salvaDocEditado
+    salvaDocEditado,
+    acessaEdp,
+    atualizaEdp,
+    acessaPcp,
+    atualizaPcp,
+    acessaProd,
+    atualizaProd,
+    acessaQuali,
+    atualizaQuali
 }

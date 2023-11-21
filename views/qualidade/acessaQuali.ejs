@@ -1,0 +1,85 @@
+<%- include('../partials/sidebar') %>
+<link rel="stylesheet" href="/css/table.css" />
+<link rel="stylesheet" href="/css/button8.css" />
+<link rel="stylesheet" href="/css/loading.css" />
+
+
+<div class="row mt-4">
+    <div class="col">
+      <h3 style="text-align: center;">Qualidade</h3>
+    </div>
+</div>
+
+<form action="/atualiza-quali/<%=camposQuali.id%>" method="post">
+    <div class="row">
+        <div class="col">
+            <div class="form-floating">
+                <select name="quali_responsavel" class="form-select" id="quali_responsavel" aria-label="Floating label select example">
+    
+                <%if(camposQuali.quali_responsavel == null || camposQuali.quali_responsavel == ""){%>
+                    <option selected value="Não preenchido">Não preenchido</option>
+                    <%for(let i = 0; i < respQuali.length; i++){%>
+                        <option value="<%=respQuali[i].name%>"><%=respQuali[i].name%></option>
+                    <%}%>
+                <%}%>
+    
+                <%if(camposQuali.quali_responsavel != ""){%>
+                    <option value="<%=camposQuali.quali_responsavel%>"><%=camposQuali.quali_responsavel%></option>
+                <%}%>
+    
+                </select>
+            <label for="quali_responsavel">Responsável:</label>
+            </div>
+        </div>
+        <div class="col">
+            <div class="form-floating">
+                <input name="quali_data" type="date" class="form-control" id="quali_data" placeholder="Data:" value="<%=camposQuali.quali_data%>">
+                <label for="quali_data">Data:</label>
+              </div>
+        </div>
+        <div class="col">
+            <div class="form-floating">
+                <select class="form-select" id="quali_status" aria-label="Floating label select example" name="quali_status">
+                <%if(camposQuali.quali_status == ""){%>
+                  <option selected value="Ok">Ok</option>
+                  <option value="Nao Ok">Não Ok</option>
+                  <option value="N/A">N/A</option>
+                <%} else if (camposQuali.quali_status != ""){%>
+                    <option value="<%=camposQuali.quali_status%>"><%=camposQuali.quali_status%></option>
+                <%}%>
+                </select>
+            <label for="quali_status">Status:</label>
+            </div>
+        </div>
+    </div>
+    <div class="row mt-4">
+        <div class="col">
+            <div class="form-floating">
+                <input name="quali_parecer" type="text" class="form-control" id="quali_parecer" placeholder="Parecer da Qualidade:" value="<%=camposQuali.quali_parecer%>">
+                <label for="quali_parecer">Parecer da Qualidade:</label>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mt-4">
+        <div class="col" style="text-align: center;">
+            <button type="submit" id="envia" class="btn button-8" style="width: 15%;">Enviar</button>
+        </div>
+    </div>
+</form>
+
+<script type="text/javascript">
+    if("<%=camposQuali.quali_data%>" != ""){
+        document.getElementById("quali_data").readOnly = true
+    }
+
+    if("<%=camposQuali.quali_parecer%>" != ""){
+        document.getElementById("quali_parecer").readOnly = true
+    }
+</script>
+
+
+
+<script type="text/javascript" src="/js/carregador.js"></script>
+<script type="text/javascript" src="/js/confirmation.js"></script>
+<script type="text/javascript" src="/js/procura.js"></script>

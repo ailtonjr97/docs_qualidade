@@ -10,9 +10,6 @@
 </style>
 
 <body>
-
-        <form action="/salvar-documento-editado/<%=doc.id%>" method="POST">
-
         <div class="row mt-2">
             <div class="col"><img src="https://www.fibracem.com/wp-content/uploads/2020/11/LOGO-FIBRACEM-5.png" alt=""></div>
             <div class="col">
@@ -114,21 +111,21 @@
           <div class="row">
             <div class="col">
               <div class="form-floating">
-                <input type="text" class="form-control" id="tempo_previsto" name="tempo_previsto" placeholder="Tempo Previsto:" value="<%=doc.tempo_previsto%>" <%if(doc.tempo_previsto != "" || logado.setor != "engenharia"){%> readonly <%}%>>
+                <input type="text" class="form-control" id="tempo_previsto" name="tempo_previsto" placeholder="Tempo Previsto:" value="<%=doc.tempo_previsto%>" readonly>
                 <label for="tempo_previsto">Tempo Previsto:</label>
               </div>
             </div>
             <div class="col">
               <div class="form-floating">
                 <select class="form-select" id="edp_responsavel" aria-label="Floating label select example" name="edp_responsavel">
-                  <option selected value="<%=doc.edp_responsavel%>" <%if(doc.edp_responsavel != "" || logado.setor != "engenharia"){%> disabled <%}%>><%=doc.edp_responsavel%></option>
+                    <option selected value="<%=doc.edp_responsavel%>" disabled><%=doc.edp_responsavel%></option>
                 </select>
                 <label for="edp_responsavel">Responsável:</label>
               </div>
             </div>
             <div class="col">
               <div class="form-floating">
-                <input type="date" class="form-control" id="edp_data" name="edp_data" placeholder="Tempo Previsto:" value="<%=doc.edp_data%>" <%if(doc.edp_data != "" || logado.setor != "engenharia"){%> readonly <%}%>>
+                <input type="date" class="form-control" id="edp_data" name="edp_data" placeholder="Tempo Previsto:" value="<%=doc.edp_data%>"readonly>
                 <label for="edp_data">Data:</label>
               </div>
             </div>
@@ -136,9 +133,7 @@
           <div class="row mt-2">
             <div class="col">
               <div class="form-floating">
-                <textarea class="form-control" name="instrucao_reprocesso" placeholder="Instrução Reprocesso:" id="instrucao_reprocesso" style="height: 58px" <%if(doc.instrucao_reprocesso != "" ||logado.setor != "engenharia"){%> readonly <%}%>>
-                  <%=doc.instrucao_reprocesso%>
-                </textarea>
+                <input type="text" class="form-control" id="instrucao_reprocesso" name="instrucao_reprocesso" placeholder="Instrução Reprocesso:" value="<%=doc.instrucao_reprocesso%>" readonly>
                 <label for="instrucao_reprocesso">Instrução Reprocesso:</label>
               </div>
             </div>
@@ -153,21 +148,21 @@
           <div class="row mt-1">
             <div class="col">
               <div class="form-floating">
-                <input type="text" class="form-control" id="pcp_odf_retrabalho" name="pcp_odf_retrabalho" placeholder="ODF Retrabalho:" value="<%=doc.pcp_odf_retrabalho%>" <%if(doc.pcp_odf_retrabalho != "" || logado.setor != "pcp"){%> readonly <%}%>>
+                <input type="text" class="form-control" id="pcp_odf_retrabalho" name="pcp_odf_retrabalho" placeholder="ODF Retrabalho:" value="<%=doc.pcp_odf_retrabalho%>" readonly>
                 <label for="pcp_odf_retrabalho">ODF Retrabalho:</label>
               </div>
             </div>
             <div class="col">
               <div class="form-floating">
                 <select class="form-select" id="pcp_responsavel" aria-label="Floating label select example" name="pcp_responsavel">
-                  <option selected value="<%=doc.pcp_responsavel%>" <%if(doc.pcp_responsavel != "" || logado.setor != "pcp"){%> disabled <%}%>><%=doc.pcp_responsavel%></option>
+                    <option selected value="<%=doc.pcp_responsavel%>" disable><%=doc.pcp_responsavel%></option>
                 </select>
                 <label for="pcp_responsavel">Responsável:</label>
               </div>
             </div>
             <div class="col">
               <div class="form-floating">
-                <input type="date" class="form-control" id="pcp_data" name="pcp_data" placeholder="Data:" value="<%=doc.pcp_data%>" <%if(doc.pcp_data != "" || logado.setor != "pcp"){%> readonly <%}%>>
+                <input type="date" class="form-control" id="pcp_data" name="pcp_data" placeholder="Data:" value="<%=doc.pcp_data%>" readonly>
                 <label for="pcp_data">Data:</label>
               </div>
             </div>
@@ -175,10 +170,8 @@
           <div class="row mt-2">
             <div class="col">
               <div class="form-floating">
-                <textarea class="form-control" name="pcp_obs" placeholder="Observações do pcp:" id="pcp_obs" style="height: 58px" <%if(doc.pcp_obs != "" ||logado.setor != "pcp"){%> readonly <%}%>>
-                  <%=doc.pcp_obs%>
-                </textarea>
-                <label for="pcp_obs">Observações do PCP:</label>
+                <input type="text" class="form-control" id="pcp_obs" name="pcp_obs" placeholder="Observações do PCP:" value="<%=doc.pcp_obs%>" readonly>
+                <label for="pcp_obs">Observações do pcp:</label>
               </div>
             </div>
           </div>
@@ -192,19 +185,19 @@
           <div class="row mt-2">
             <div class="col">
               <div class="form-floating">
-                <input type="text" class="form-control" id="prod_tempo_realizado" name="prod_tempo_realizado" placeholder="Tempo Realizado:" value="<%=doc.prod_tempo_realizado%>" <%if(doc.prod_tempo_realizado != "" || logado.setor != "producao"){%> readonly <%}%>>
+                <input type="text" class="form-control" id="prod_tempo_realizado" name="prod_tempo_realizado" placeholder="Tempo Realizado:" value="<%=doc.prod_tempo_realizado%>" readonly>
                 <label for="prod_tempo_realizado">Tempo Realizado:</label>
               </div>
             </div>
             <div class="col">
               <div class="form-floating">
-                <input type="text" class="form-control" id="prod_insumos" name="prod_insumos" placeholder="Insumos:" value="<%=doc.prod_insumos%>" <%if(doc.prod_insumos != "" || logado.setor != "producao"){%> readonly <%}%>>
+                <input type="text" class="form-control" id="prod_insumos" name="prod_insumos" placeholder="Insumos:" value="<%=doc.prod_insumos%>" readonly>
                 <label for="prod_insumos">Insumos:</label>
               </div>
             </div>
             <div class="col">
               <div class="form-floating">
-                <input type="text" class="form-control" id="prod_sucata" name="prod_sucata" placeholder="Sucata:" value="<%=doc.prod_sucata%>" <%if(doc.prod_sucata != "" || logado.setor != "producao"){%> readonly <%}%>>
+                <input type="text" class="form-control" id="prod_sucata" name="prod_sucata" placeholder="Sucata:" value="<%=doc.prod_sucata%>" readonly>
                 <label for="prod_sucata">Sucata:</label>
               </div>
             </div>
@@ -212,23 +205,22 @@
           <div class="row mt-2">
             <div class="col">
               <div class="form-floating">
-                <input type="text" class="form-control" id="prod_responsavel" name="prod_responsavel" placeholder="Responsável:" value="<%=doc.prod_responsavel%>" <%if(doc.prod_responsavel != "" || logado.setor != "producao"){%> readonly <%}%>>
+                <select class="form-select" id="prod_responsavel" aria-label="Floating label select example" name="prod_responsavel">
+                  <option selected value="<%=doc.prod_responsavel%>" disabled><%=doc.prod_responsavel%></option>
+                </select>
                 <label for="prod_responsavel">Responsável:</label>
               </div>
             </div>
             <div class="col">
               <div class="form-floating">
-                <input type="date" class="form-control" id="prod_data" name="prod_data" placeholder="Data:" value="<%=doc.prod_data%>" <%if(doc.prod_data != "" || logado.setor != "producao"){%> readonly <%}%>>
+                <input type="date" class="form-control" id="prod_data" name="prod_data" placeholder="Data:" value="<%=doc.prod_data%>" readonly>
                 <label for="prod_data">Data:</label>
               </div>
             </div>
             <div class="col">
               <div class="form-floating">
                 <select class="form-select" id="prod_status" aria-label="Floating label select example" name="prod_status">
-                  <option selected value="<%=doc.prod_status%>" <%if(doc.prod_status != "" || logado.setor != "producao"){%> disabled <%}%>><%=doc.prod_status%></option>
-                  <option value="OK" <%if(doc.prod_status != "" || logado.setor != "producao"){%> disabled <%}%>>OK</option>
-                  <option value="NAO OK" <%if(doc.prod_status != "" || logado.setor != "producao"){%> disabled <%}%>>NAO OK</option>
-                  <option value="N/A" <%if(doc.prod_status != "" || logado.setor != "producao"){%> disabled <%}%>>N/A</option>
+                  <option selected value="<%=doc.prod_status%>" disabled><%=doc.prod_status%></option>
                 </select>
                 <label for="prod_status">Status:</label>
               </div>
@@ -237,7 +229,7 @@
           <div class="row mt-2">
             <div class="col">
               <div class="form-floating">
-                <textarea class="form-control" name="prod_obs" placeholder="Observações da Produção:" id="prod_obs" style="height: 58px" <%if(doc.prod_obs != "" ||logado.setor != "producao"){%> readonly <%}%>>
+                <textarea class="form-control" name="prod_obs" placeholder="Observações da Produção:" id="prod_obs" style="height: 58px" readonly>
                   <%=doc.prod_obs%>
                 </textarea>
                 <label for="prod_obs">Observações da Produção:</label>
@@ -254,65 +246,39 @@
           <div class="row mt-2">
             <div class="col">
               <div class="form-floating">
-                <input type="text" class="form-control" id="quali_responsavel" name="quali_responsavel" placeholder="Responsável:" value="<%=doc.quali_responsavel%>" <%if(doc.quali_responsavel != "" || logado.setor != "qualidade"){%> readonly <%}%>>
+                <input type="text" class="form-control" id="quali_responsavel" name="quali_responsavel" placeholder="Responsável:" value="<%=doc.quali_responsavel%>" readonly>
                 <label for="quali_responsavel">Responsável:</label>
               </div>
             </div>
             <div class="col">
               <div class="form-floating">
-                <input type="date" class="form-control" id="quali_data" name="quali_data" placeholder="Data:" value="<%=doc.quali_data%>" <%if(doc.quali_data != "" || logado.setor != "qualidade"){%> readonly <%}%>>
+                <input type="date" class="form-control" id="quali_data" name="quali_data" placeholder="Data:" value="<%=doc.quali_data%>" readonly>
                 <label for="quali_data">Data:</label>
               </div>
             </div>
             <div class="col">
               <div class="form-floating">
                 <select class="form-select" id="quali_status" aria-label="Floating label select example" name="quali_status">
-                  <option selected value="<%=doc.quali_status%>" <%if(doc.quali_status != "" || logado.setor != "qualidade"){%> disabled <%}%>><%=doc.quali_status%></option>
-                  <option value="OK" <%if(doc.prod_status != "" || logado.setor != "qualidade"){%> disabled <%}%>>OK</option>
-                  <option value="NAO OK" <%if(doc.prod_status != "" || logado.setor != "qualidade"){%> disabled <%}%>>NAO OK</option>
-                  <option value="N/A" <%if(doc.prod_status != "" || logado.setor != "qualidade"){%> disabled <%}%>>N/A</option>
+                  <option selected value="<%=doc.quali_status%>" disabled><%=doc.quali_status%></option>
                 </select>
                 <label for="quali_status">Status:</label>
               </div>
             </div>
           </div>
-          <div class="row mt-2">
+          <div class="row mt-2 mb-5">
             <div class="col">
               <div class="form-floating">
-                <textarea class="form-control" name="quali_parecer" placeholder="Parecer da Qualidade:" id="quali_parecer" style="height: 58px" <%if(doc.quali_parecer != "" ||logado.setor != "qualidade"){%> readonly <%}%>>
+                <textarea class="form-control" name="quali_parecer" placeholder="Parecer da Qualidade:" id="quali_parecer" style="height: 58px" readonly>
                   <%=doc.quali_parecer%>
                 </textarea>
                 <label for="quali_parecer">Parecer da Qualidade:</label>
               </div>
             </div>
           </div>
-
-          <div class="row mt-4">
-            <div class="col">
-              <h3 style="text-align: center;">Observações Gerais</h3>
-            </div>
-          </div>
-
-
-          <div class="row mt-2">
-            <div class="col">
-              <div class="form-floating">
-                <textarea class="form-control" name="geral_obs" placeholder="Observações Gerais:" id="geral_obs" style="height: 58px" <%if(doc.geral_obs != "" ||logado.setor != "qualidade"){%> readonly <%}%>>
-                  <%=doc.geral_obs%>
-                </textarea>
-                <label for="geral_obs">Observações Gerais:</label>
-              </div>
-            </div>
-          </div>
-
-          <div class="row mt-3">
-            <div class="col" style="text-align: center;">
-                <button type="submit" class="button-8" style="width: 15%;">Finalizar</button>
-            </div>
-          </div>
-        </form>
 </body>
 
+<script text="text/javascript">
+</script>
 
 
 <script type="text/javascript" src="/js/carregador.js"></script>

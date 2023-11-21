@@ -29,6 +29,13 @@ let users = async(req, res)=>{
     return rows;
 }
 
+let responsaveis = async(setor)=>{
+    const conn = await connect();
+    const [rows] = await conn.query(`SELECT * FROM users where setor = '${setor}'`);
+    conn.end();
+    return rows;
+}
+
 let countUsers = async(req, res)=>{
     const conn = await connect();
     const [rows] = await conn.query('SELECT COUNT(*) AS usersCount FROM users WHERE active = 1');
@@ -38,8 +45,8 @@ let countUsers = async(req, res)=>{
 
 let insertUser = async(user)=>{
     const conn = await connect();
-    const values = [user.name, user.email, user.password, user.salt, 1, 0];
-    await conn.query('INSERT INTO users (name, email, password, salt, active, admin) VALUES (?, ?, ?, ?, ?, ?)', values);
+    const values = [user.name, user.email, user.password, user.salt, 1, 0, user.setor];
+    await conn.query('INSERT INTO users (name, email, password, salt, active, admin, setor) VALUES (?, ?, ?, ?, ?, ?, ?)', values);
     conn.end();
 }
 
@@ -118,5 +125,6 @@ module.exports = {
     editarUser,
     changePassword,
     getUserByIntranetID,
-    getUserByIdForJwt
+    getUserByIdForJwt,
+    responsaveis
 };

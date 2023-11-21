@@ -31,7 +31,7 @@ const showDocs = async()=>{
 
 const insertDocs = async(tipo_doc, data, inspetor, cod_prod, descri, lote_odf, lance, quantidade_metragem, cpnc_numero, motivo_nc)=>{
     const conn = await connect();
-    await conn.query('INSERT INTO docspro.docs_qualidade (tipo_doc, data, inspetor, cod_prod, descri, lote_odf, lance, quantidade_metragem, cpnc_numero, motivo_nc, tempo_previsto, instrucao_reprocesso, edp_responsavel, edp_data, pcp_odf_retrabalho, pcp_responsavel, pcp_data, pcp_obs, prod_tempo_realizado, prod_insumos, prod_sucata, prod_obs, prod_responsavel, prod_data, prod_status, quali_parecer, quali_responsavel, quali_data, quali_status, geral_obs) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "")',
+    await conn.query('INSERT INTO docspro.docs_qualidade (tipo_doc, data, inspetor, cod_prod, descri, lote_odf, lance, quantidade_metragem, cpnc_numero, motivo_nc, tempo_previsto, instrucao_reprocesso, edp_responsavel, edp_data, pcp_odf_retrabalho, pcp_responsavel, pcp_data, pcp_obs, prod_tempo_realizado, prod_insumos, prod_sucata, prod_obs, prod_responsavel, prod_data, prod_status, quali_parecer, quali_responsavel, quali_data, quali_status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "")',
     [tipo_doc, data, inspetor, cod_prod, descri, lote_odf, lance, quantidade_metragem, cpnc_numero, motivo_nc]);
     conn.end();
 }
@@ -49,6 +49,120 @@ const camposVaziosEdp = async(id)=>{
     conn.end();
     return values
 }
+
+const camposVaziosPcp = async(id)=>{
+    const conn = await connect();
+    const [values] = await conn.query('select pcp_odf_retrabalho, pcp_responsavel, pcp_data, pcp_obs from docspro.docs_qualidade where id = ?', [id]);
+    conn.end();
+    return values
+}
+
+const camposEdp = async(id)=>{
+    const conn = await connect();
+    const [values] = await conn.query('select id, tempo_previsto, instrucao_reprocesso, edp_responsavel, edp_data from docspro.docs_qualidade where id = ?', [id]);
+    conn.end();
+    return values
+}
+
+const camposPcp = async(id)=>{
+    const conn = await connect();
+    const [values] = await conn.query('select id, pcp_odf_retrabalho, pcp_responsavel, pcp_data, pcp_obs from docspro.docs_qualidade where id = ?', [id]);
+    conn.end();
+    return values
+}
+
+const camposProd = async(id)=>{
+    const conn = await connect();
+    const [values] = await conn.query('select id, prod_tempo_realizado, prod_insumos, prod_sucata, prod_obs, prod_responsavel, prod_data, prod_status from docspro.docs_qualidade where id = ?', [id]);
+    conn.end();
+    return values
+}
+
+const camposQuali = async(id)=>{
+    const conn = await connect();
+    const [values] = await conn.query('select id, quali_parecer, quali_responsavel, quali_data, quali_status from docspro.docs_qualidade where id = ?', [id]);
+    conn.end();
+    return values
+}
+
+const atualizaEdp = async(
+    tempo_previsto,
+    instrucao_reprocesso,
+    edp_responsavel,
+    edp_data,
+    parameter
+)=>{
+const conn = await connect();
+await conn.query("update docspro.docs_qualidade set tempo_previsto = ?, instrucao_reprocesso = ?, edp_responsavel = ?, edp_data = ? where id = ?", [
+    tempo_previsto,
+    instrucao_reprocesso,
+    edp_responsavel,
+    edp_data,
+    parameter
+]);
+conn.end();
+}
+
+const atualizaPcp = async(
+    pcp_odf_retrabalho,
+    pcp_responsavel,
+    pcp_data,
+    pcp_obs,
+    parameter
+)=>{
+const conn = await connect();
+await conn.query("update docspro.docs_qualidade set pcp_odf_retrabalho = ?, pcp_responsavel = ?, pcp_data = ?, pcp_obs = ? where id = ?", [
+    pcp_odf_retrabalho,
+    pcp_responsavel,
+    pcp_data,
+    pcp_obs,
+    parameter
+]);
+conn.end();
+}
+
+const atualizaProd = async(
+    prod_tempo_realizado,
+    prod_insumos,
+    prod_sucata,
+    prod_obs,
+    prod_responsavel,
+    prod_data,
+    prod_status,
+    parameter
+)=>{
+const conn = await connect();
+await conn.query("update docspro.docs_qualidade set prod_tempo_realizado = ?, prod_insumos = ?, prod_sucata = ?, prod_obs = ?, prod_responsavel = ?, prod_data = ?, prod_status = ? where id = ?", [
+    prod_tempo_realizado,
+    prod_insumos,
+    prod_sucata,
+    prod_obs,
+    prod_responsavel,
+    prod_data,
+    prod_status,
+    parameter
+]);
+conn.end();
+}
+
+const atualizaQuali = async(
+    quali_parecer,
+    quali_responsavel,
+    quali_data,
+    quali_status,
+    parameter
+)=>{
+const conn = await connect();
+await conn.query("update docspro.docs_qualidade set quali_parecer = ?, quali_responsavel = ?, quali_data = ?, quali_status = ? where id = ?", [
+    quali_parecer,
+    quali_responsavel,
+    quali_data,
+    quali_status,
+    parameter
+]);
+conn.end();
+}
+
 
 const countDocs = async()=>{
     const conn = await connect();
@@ -114,5 +228,14 @@ module.exports = {
     showDoc,
     countDocs,
     updateDoc,
-    camposVaziosEdp
+    camposVaziosEdp,
+    camposVaziosPcp,
+    camposEdp,
+    atualizaEdp,
+    camposPcp,
+    atualizaPcp,
+    camposProd,
+    atualizaProd,
+    camposQuali,
+    atualizaQuali
 }

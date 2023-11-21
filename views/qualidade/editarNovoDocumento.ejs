@@ -52,10 +52,9 @@
           <div class="col">
             <div class="form-floating">
               <select class="form-select" id="inspetor" aria-label="Floating label select example" name="inspetor">
-                <option selected value="Inspetor 1">Inspetor 1</option>
-                <option value="Inspetor 2">Inspetor 2</option>
-                <option value="Inspetor 3">Inspetor 3</option>
-                <option value="Inspetor 4">Inspetor 4</option>
+                <%for(let i = 0; i < inspetores.length; i++){%>
+                <option value="<%=inspetores[i].name%>"><%=inspetores[i].name%></option>
+                <%}%>
               </select>
               <label for="inspetor">Inspetor</label>
             </div>
@@ -68,7 +67,7 @@
           </div>
           <div class="col-md-4">
             <div class="form-floating">
-              <textarea class="form-control" name="descri" placeholder="Descrição:" id="descri" style="height: 58px"></textarea>
+              <textarea class="form-control" name="descri" placeholder="Descrição:" id="descri" style="height: 58px" required>Digite aqui a descrição.</textarea>
               <label for="descri">Descrição:</label>
             </div>
           </div>
@@ -104,7 +103,7 @@
           <div class="row mt-2">
             <div class="col">
               <div class="form-floating">
-                <textarea class="form-control" name="motivo_nc" placeholder="Motivo da NC:" id="motivo_nc" style="height: 58px"></textarea>
+                <textarea class="form-control" name="motivo_nc" placeholder="Motivo da NC:" id="motivo_nc" style="height: 58px" required>Digite aqui o motivo da NC.</textarea>
                 <label for="motivo_nc">Motivo da NC:</label>
               </div>
             </div>

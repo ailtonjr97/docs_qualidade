@@ -1,0 +1,116 @@
+<%- include('../partials/sidebar') %>
+<link rel="stylesheet" href="/css/table.css" />
+<link rel="stylesheet" href="/css/button8.css" />
+<link rel="stylesheet" href="/css/loading.css" />
+
+
+<div class="row mt-4">
+    <div class="col">
+      <h3 style="text-align: center;">Produção</h3>
+    </div>
+</div>
+
+<form action="/atualiza-prod/<%=camposProd.id%>" method="post">
+    <div class="row">
+        <div class="col">
+            <div class="form-floating">
+                <input name="prod_tempo_realizado" type="text" class="form-control" id="prod_tempo_realizado" placeholder="Tempo realizado:" value="<%=camposProd.prod_tempo_realizado%>">
+                <label for="prod_tempo_realizado">Tempo realizado:</label>
+            </div>
+        </div>
+        <div class="col">
+            <div class="form-floating">
+                <input name="prod_insumos" type="text" class="form-control" id="prod_insumos" placeholder="Insumos:" value="<%=camposProd.prod_insumos%>">
+                <label for="prod_insumos">Insumos:</label>
+            </div>
+        </div>
+        <div class="col">
+            <div class="form-floating">
+                <input name="prod_sucata" type="text" class="form-control" id="prod_sucata" placeholder="Sucata:" value="<%=camposProd.prod_sucata%>">
+                <label for="prod_sucata">Sucata:</label>
+            </div>
+        </div>
+    </div>
+    <div class="row mt-4">
+        <div class="col">
+            <div class="form-floating">
+                <select name="prod_responsavel" class="form-select" id="prod_responsavel" aria-label="Floating label select example">
+    
+                <%if(camposProd.prod_responsavel == null || camposProd.prod_responsavel == ""){%>
+                    <option selected value="Não preenchido">Não preenchido</option>
+                    <%for(let i = 0; i < respProd.length; i++){%>
+                        <option value="<%=respProd[i].name%>"><%=respProd[i].name%></option>
+                    <%}%>
+                <%}%>
+    
+                <%if(camposProd.prod_responsavel != ""){%>
+                    <option value="<%=camposProd.prod_responsavel%>"><%=camposProd.prod_responsavel%></option>
+                <%}%>
+    
+                </select>
+            <label for="prod_responsavel">Responsável:</label>
+            </div>
+        </div>
+        <div class="col">
+            <div class="form-floating">
+                <input name="prod_data" type="date" class="form-control" id="prod_data" placeholder="Data:" value="<%=camposProd.prod_data%>">
+                <label for="prod_data">Data:</label>
+              </div>
+        </div>
+        <div class="col">
+            <div class="form-floating">
+                <select class="form-select" id="prod_status" aria-label="Floating label select example" name="prod_status">
+                <%if(camposProd.prod_status == ""){%>
+                  <option selected value="Ok">Ok</option>
+                  <option value="Nao Ok">Não Ok</option>
+                  <option value="N/A">N/A</option>
+                <%} else if (camposProd.prod_status != ""){%>
+                    <option value="<%=camposProd.prod_status%>"><%=camposProd.prod_status%></option>
+                <%}%>
+                </select>
+            <label for="prod_status">Status:</label>
+            </div>
+        </div>
+    </div>
+    <div class="row mt-4">
+        <div class="col">
+            <div class="form-floating">
+                <input name="prod_obs" type="text" class="form-control" id="prod_obs" placeholder="Observações da Produção:" value="<%=camposProd.prod_obs%>">
+                <label for="prod_obs">Observações da Produção:</label>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="row mt-4">
+        <div class="col" style="text-align: center;">
+            <button type="submit" id="envia" class="btn button-8" style="width: 15%;">Enviar</button>
+        </div>
+    </div>
+</form>
+
+<script type="text/javascript">
+    if("<%=camposProd.prod_tempo_realizado%>" != ""){
+        document.getElementById("prod_tempo_realizado").readOnly = true
+    }
+
+    if("<%=camposProd.prod_insumos%>" != ""){
+        document.getElementById("prod_insumos").readOnly = true
+    }
+
+    if("<%=camposProd.prod_sucata%>" != ""){
+        document.getElementById("prod_sucata").readOnly = true
+    }
+
+    if("<%=camposProd.prod_data%>" != ""){
+        document.getElementById("prod_data").readOnly = "none";
+    }
+
+    if("<%=camposProd.prod_obs%>" != ""){
+        document.getElementById("prod_obs").readOnly = "none";
+    }
+</script>
+
+<script type="text/javascript" src="/js/carregador.js"></script>
+<script type="text/javascript" src="/js/confirmation.js"></script>
+<script type="text/javascript" src="/js/procura.js"></script>
