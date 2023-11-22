@@ -1,0 +1,51 @@
+<%- include('../partials/sidebar') %>
+<link rel="stylesheet" href="/css/table.css" />
+<link rel="stylesheet" href="/css/button8.css" />
+<link rel="stylesheet" href="/css/loading.css" />
+
+
+<h1 style="text-align: center;" class="mt-2">Motivo NC</h1>
+
+<form action="/motivo-nc/<%=motivoNc.id%>" method="POST" id="form">
+<div class="row mb-3 mt-4">
+    <div class="col">
+        <div class="form-floating">
+            <input name="motivo_nc" type="text" class="form-control" id="motivo_nc" placeholder="Motivo NC:" value="<%=motivoNc.motivo_nc%>">
+            <label for="motivo_nc">Motivo NC:</label>
+        </div>
+    </div>
+</div>
+<%if(motivoNc.motivo_nc != ""){%>
+<div class="row">
+    <div class="col">
+        <p>Preenchido por: <span><%=motivoNc.motivo_nc_usuario%></span></p>
+    </div>
+</div>
+<%}%>
+
+<%if(motivoNc.motivo_nc == ""){%>
+<div class="row mt-4">
+    <div class="col" style="text-align: center;">
+        <button type="submit" id="envia" class="btn button-8" style="width: 15%;">Enviar</button>
+    </div>
+</div>
+<%}%>
+
+</form>
+
+<script type="text/javascript">
+    if("<%=motivoNc.motivo_nc%>" != ""){
+        document.getElementById("motivo_nc").readOnly = true
+    }
+
+    const form = document.getElementById('form');
+    form.addEventListener('keypress', function(e) {
+        if (e.keyCode === 13) {
+        e.preventDefault();
+        }
+    });
+</script>
+
+<script type="text/javascript" src="/js/carregador.js"></script>
+<script type="text/javascript" src="/js/confirmation.js"></script>
+<script type="text/javascript" src="/js/procura.js"></script>

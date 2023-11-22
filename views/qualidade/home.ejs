@@ -6,10 +6,10 @@
 <div id="loading"></div>
 
     <div class="row" style="margin-top: 10px;">
-      <div class="col-sm-4">
+      <div class="col-lg-6">
         <h4>Lista de documentos da Qualidade</h4>
       </div>
-      <div class="col-lg-3">
+      <div class="col-lg-1">
       </div>
       <div class="col-lg-5">
           <button type="button" class="button-8 mb-2" id="result" style="float: right;">
@@ -77,7 +77,7 @@
             </td>
             <td>
               <a href="/mostra-documento/<%=doc.id%>">
-                <button type="button" class="button-8" id="result"><i class="fa-solid fa-eye" style="color: #2a67cf;"></i></button>
+                <button type="button" class="button-8" id="result">Visualizar</button>
               </a>
               <a href="/acessa-edp/<%=doc.id%>">
                 <button type="button" class="button-8" id="result">EDP</button>
@@ -90,6 +90,9 @@
               </a>
               <a href="/acessa-quali/<%=doc.id%>">
                 <button type="button" class="button-8" id="result">Qualidade</button>
+              </a>
+              <a href="/motivo-nc/<%=doc.id%>">
+                <button type="button" class="button-8" id="result">Motivo NC</button>
               </a>
             </td>
           </tr>

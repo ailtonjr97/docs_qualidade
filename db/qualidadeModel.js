@@ -24,15 +24,15 @@ connect();
 
 const showDocs = async()=>{
     const conn = await connect();
-    const [values] = await conn.query('select * from docspro.docs_qualidade');
+    const [values] = await conn.query('select * from docspro.docs_qualidade order by id desc');
     conn.end();
     return values
 }
 
-const insertDocs = async(tipo_doc, data, inspetor, cod_prod, descri, lote_odf, lance, quantidade_metragem, cpnc_numero, motivo_nc)=>{
+const insertDocs = async(tipo_doc, data, inspetor, cod_prod, descri, lote_odf, lance, quantidade_metragem, cpnc_numero)=>{
     const conn = await connect();
-    await conn.query('INSERT INTO docspro.docs_qualidade (tipo_doc, data, inspetor, cod_prod, descri, lote_odf, lance, quantidade_metragem, cpnc_numero, motivo_nc, tempo_previsto, instrucao_reprocesso, edp_responsavel, edp_data, pcp_odf_retrabalho, pcp_responsavel, pcp_data, pcp_obs, prod_tempo_realizado, prod_insumos, prod_sucata, prod_obs, prod_responsavel, prod_data, prod_status, quali_parecer, quali_responsavel, quali_data, quali_status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "")',
-    [tipo_doc, data, inspetor, cod_prod, descri, lote_odf, lance, quantidade_metragem, cpnc_numero, motivo_nc]);
+    await conn.query('INSERT INTO docspro.docs_qualidade (tipo_doc, data, inspetor, cod_prod, descri, lote_odf, lance, quantidade_metragem, cpnc_numero, motivo_nc, tempo_previsto, instrucao_reprocesso, edp_responsavel, edp_data, pcp_odf_retrabalho, pcp_responsavel, pcp_data, pcp_obs, prod_tempo_realizado, prod_insumos, prod_sucata, prod_obs, prod_responsavel, prod_data, prod_status, quali_parecer, quali_responsavel, quali_data, quali_status, motivo_nc_usuario) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "")',
+    [tipo_doc, data, inspetor, cod_prod, descri, lote_odf, lance, quantidade_metragem, cpnc_numero]);
     conn.end();
 }
 
@@ -57,6 +57,13 @@ const camposVaziosPcp = async(id)=>{
     return values
 }
 
+const camposVaziosProducao = async(id)=>{
+    const conn = await connect();
+    const [values] = await conn.query('select prod_tempo_realizado, prod_insumos, prod_sucata, prod_obs, prod_responsavel, prod_data, prod_status from docspro.docs_qualidade where id = ?', [id]);
+    conn.end();
+    return values;
+}
+
 const camposEdp = async(id)=>{
     const conn = await connect();
     const [values] = await conn.query('select id, tempo_previsto, instrucao_reprocesso, edp_responsavel, edp_data from docspro.docs_qualidade where id = ?', [id]);
@@ -67,6 +74,20 @@ const camposEdp = async(id)=>{
 const camposPcp = async(id)=>{
     const conn = await connect();
     const [values] = await conn.query('select id, pcp_odf_retrabalho, pcp_responsavel, pcp_data, pcp_obs from docspro.docs_qualidade where id = ?', [id]);
+    conn.end();
+    return values
+}
+
+const motivoNc = async(id)=>{
+    const conn = await connect();
+    const [values] = await conn.query('select id, motivo_nc, motivo_nc_usuario from docspro.docs_qualidade where id = ?', [id]);
+    conn.end();
+    return values
+}
+
+const atualizaMotivoNc = async(motivo_nc, logado, id)=>{
+    const conn = await connect();
+    const [values] = await conn.query('update docspro.docs_qualidade set motivo_nc = ?, motivo_nc_usuario = ? where id = ?', [motivo_nc, logado, id]);
     conn.end();
     return values
 }
@@ -237,5 +258,8 @@ module.exports = {
     camposProd,
     atualizaProd,
     camposQuali,
-    atualizaQuali
+    atualizaQuali,
+    camposVaziosProducao,
+    motivoNc,
+    atualizaMotivoNc
 }

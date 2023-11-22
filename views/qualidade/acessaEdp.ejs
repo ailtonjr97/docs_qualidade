@@ -10,7 +10,11 @@
     </div>
 </div>
 
-<form action="/atualiza-edp/<%=camposEdp.id%>" method="post">
+<%if(logado.setor != 'edp'){%>
+    <h2 style="text-align: center;">Não permitido para usuários que não sejam da EDP.</h2>
+<%}else{%>
+
+<form action="/atualiza-edp/<%=camposEdp.id%>" method="post" id="form">
 <div class="row">
     <div class="col">
         <div class="form-floating">
@@ -61,6 +65,8 @@
 
 </form>
 
+<%}%>
+
 <script type="text/javascript">
     if("<%=camposEdp.tempo_previsto%>" != ""){
         document.getElementById("tempo_previsto").readOnly = true
@@ -77,6 +83,14 @@
     if("<%=camposEdp.tempo_previsto%>" != ""){
         document.getElementById("envia").style.display = "none";
     }
+
+    const form = document.getElementById('form');
+    form.addEventListener('keypress', function(e) {
+        if (e.keyCode === 13) {
+        e.preventDefault();
+        }
+    });
+
 </script>
 
 <script type="text/javascript" src="/js/carregador.js"></script>

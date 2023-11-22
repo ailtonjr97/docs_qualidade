@@ -64,7 +64,6 @@ const salvarNovoDocumento = async (req, res)=>{
             req.body.lance,
             req.body.quantidade_metragem,
             req.body.cpnc_numero,
-            req.body.motivo_nc,
         )
         res.redirect("/documentos-qualidade");
     } catch (error) {
@@ -75,15 +74,6 @@ const salvarNovoDocumento = async (req, res)=>{
 
 const mostraDocumento = async(req, res)=>{
     try {
-/*         for (const [key, value] of Object.entries(camposVaziosEdp[0])) {
-            if(value == ""){
-                camposVaziosEdp = true;
-                break;
-            }else{
-                camposVaziosEdp = false
-            }
-        } */
-
         const doc = await DbDocs.showDoc(req.params.id)
 
         res.render("qualidade/mostraDocumento", {
@@ -99,7 +89,6 @@ const mostraDocumento = async(req, res)=>{
 
 const salvaDocEditado = async(req, res)=>{
     try {
-        console.log("EDP RESPONSAVEL: " + req.body.edp_responsavel)
         await DbDocs.updateDoc(
             req.body.tempo_previsto,
             req.body.instrucao_reprocesso,
@@ -133,11 +122,14 @@ const salvaDocEditado = async(req, res)=>{
 
 const acessaEdp = async(req, res)=>{
     try {
+        const logado = res.locals.logado;
+
         const respEdp = await Usuarios.responsaveis("edp");
-        const camposEdp = await DbDocs.camposEdp(req.params.id)
+        const camposEdp = await DbDocs.camposEdp(req.params.id);
         res.render("qualidade/acessaEdp", {
             camposEdp: camposEdp[0],
-            respsEdp: respEdp
+            respsEdp: respEdp,
+            logado: logado
         })
     } catch (error) {
         console.log(error);
@@ -164,11 +156,27 @@ const atualizaEdp = async(req, res)=>{
 
 const acessaPcp = async(req, res)=>{
     try {
+        const logado = res.locals.logado;
+
+        const camposVaziosEdp = await DbDocs.camposVaziosEdp(req.params.id)
+        let camposVazios
+
+        for (const [key, value] of Object.entries(camposVaziosEdp[0])) {
+            if(value == ""){
+                camposVazios = true;
+                break;
+            }else{
+                camposVazios = false
+            }
+        }
+
         const respPcp = await Usuarios.responsaveis("pcp");
         const camposPcp = await DbDocs.camposPcp(req.params.id)
         res.render("qualidade/acessaPcp", {
             camposPcp: camposPcp[0],
-            respPcp: respPcp
+            respPcp: respPcp,
+            camposVazios: camposVazios,
+            logado: logado
         })
     } catch (error) {
         console.log(error);
@@ -195,11 +203,26 @@ const atualizaPcp = async(req, res)=>{
 
 const acessaProd = async(req, res)=>{
     try {
+        const logado = res.locals.logado;
+        const camposVaziosPcp = await DbDocs.camposVaziosPcp(req.params.id)
+        let camposVazios
+
+        for (const [key, value] of Object.entries(camposVaziosPcp[0])) {
+            if(value == ""){
+                camposVazios = true;
+                break;
+            }else{
+                camposVazios = false
+            }
+        }
+
         const respProd = await Usuarios.responsaveis("producao");
         const camposProd = await DbDocs.camposProd(req.params.id)
         res.render("qualidade/acessaProd", {
             camposProd: camposProd[0],
-            respProd: respProd
+            respProd: respProd,
+            camposVazios: camposVazios,
+            logado: logado
         })
     } catch (error) {
         console.log(error);
@@ -229,11 +252,27 @@ const atualizaProd = async(req, res)=>{
 
 const acessaQuali = async(req, res)=>{
     try {
+        const logado = res.locals.logado;
+        const camposVaziosProducao = await DbDocs.camposVaziosProducao(req.params.id)
+        let camposVazios
+
+        for (const [key, value] of Object.entries(camposVaziosProducao[0])) {
+            if(value == ""){
+                camposVazios = true;
+                break;
+            }else{
+                camposVazios = false
+            }
+        }
+
+
         const respQuali = await Usuarios.responsaveis("qualidade");
         const camposQuali = await DbDocs.camposQuali(req.params.id)
         res.render("qualidade/acessaQuali", {
             camposQuali: camposQuali[0],
-            respQuali: respQuali
+            respQuali: respQuali,
+            camposVazios: camposVazios,
+            logado: logado
         })
     } catch (error) {
         console.log(error);
@@ -243,7 +282,6 @@ const acessaQuali = async(req, res)=>{
 
 const atualizaQuali = async(req, res)=>{
     try {
-        console.log(req.body)
         await DbDocs.atualizaQuali(
             req.body.quali_parecer,
             req.body.quali_responsavel,
@@ -251,6 +289,30 @@ const atualizaQuali = async(req, res)=>{
             req.body.quali_status,
             parseInt(req.params.id)
         )
+
+        res.redirect("/documentos-qualidade");
+    } catch (error) {
+        console.log(error);
+        res.render("error");
+    }
+}
+
+const motivoNc = async(req, res)=>{
+    try {
+        const motivoNc = await DbDocs.motivoNc(req.params.id)
+
+        res.render('qualidade/motivoNc', {
+            motivoNc: motivoNc[0]
+        })
+    } catch (error) {
+        console.log(error);
+        res.render("error");
+    }
+}
+
+const atualizaMotivoNc = async(req, res)=>{
+    try {
+        await DbDocs.atualizaMotivoNc(req.body.motivo_nc, res.locals.logado.name, req.params.id)
 
         res.redirect("/documentos-qualidade");
     } catch (error) {
@@ -274,5 +336,7 @@ module.exports = {
     acessaProd,
     atualizaProd,
     acessaQuali,
-    atualizaQuali
+    atualizaQuali,
+    motivoNc,
+    atualizaMotivoNc
 }

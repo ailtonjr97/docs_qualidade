@@ -10,7 +10,11 @@
     </div>
 </div>
 
-<form action="/atualiza-quali/<%=camposQuali.id%>" method="post">
+<%if(camposVazios || logado.setor != 'qualidade'){%>
+    <h2 style="text-align: center;" class="mt-4">Existem campos vazios para a Produção preencher ou esse usuário não é da Qualidade.</h2>
+<%}else{%>
+
+<form action="/atualiza-quali/<%=camposQuali.id%>" method="post" id="form">
     <div class="row">
         <div class="col">
             <div class="form-floating">
@@ -68,6 +72,8 @@
     </div>
 </form>
 
+<%}%>
+
 <script type="text/javascript">
     if("<%=camposQuali.quali_data%>" != ""){
         document.getElementById("quali_data").readOnly = true
@@ -76,6 +82,13 @@
     if("<%=camposQuali.quali_parecer%>" != ""){
         document.getElementById("quali_parecer").readOnly = true
     }
+
+    const form = document.getElementById('form');
+    form.addEventListener('keypress', function(e) {
+        if (e.keyCode === 13) {
+        e.preventDefault();
+        }
+    });
 </script>
 
 

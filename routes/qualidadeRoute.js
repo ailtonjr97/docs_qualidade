@@ -17,7 +17,9 @@ const {
     acessaProd,
     atualizaProd,
     acessaQuali,
-    atualizaQuali
+    atualizaQuali,
+    motivoNc,
+    atualizaMotivoNc
 } = require('../controller/documentosController.js');
 
 const storage = multer.memoryStorage()
@@ -39,5 +41,7 @@ router.get("/acessa-prod/:id", acessaProd);
 router.post("/atualiza-prod/:id", atualizaProd);
 router.get("/acessa-quali/:id", acessaQuali);
 router.post("/atualiza-quali/:id", atualizaQuali);
+router.get("/motivo-nc/:id", motivoNc);
+router.post("/motivo-nc/:id", atualizaMotivoNc);
 
 module.exports = router;

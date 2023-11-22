@@ -10,7 +10,11 @@
     </div>
 </div>
 
-<form action="/atualiza-prod/<%=camposProd.id%>" method="post">
+<%if(camposVazios || logado.setor != 'producao'){%>
+    <h2 style="text-align: center;" class="mt-4">Existem campos vazios para o PCP preencher ou esse usuário não é da Produção.</h2>
+<%}else{%>
+
+<form action="/atualiza-prod/<%=camposProd.id%>" method="post" id="form">
     <div class="row">
         <div class="col">
             <div class="form-floating">
@@ -89,6 +93,8 @@
     </div>
 </form>
 
+<%}%>
+
 <script type="text/javascript">
     if("<%=camposProd.prod_tempo_realizado%>" != ""){
         document.getElementById("prod_tempo_realizado").readOnly = true
@@ -109,6 +115,13 @@
     if("<%=camposProd.prod_obs%>" != ""){
         document.getElementById("prod_obs").readOnly = "none";
     }
+
+    const form = document.getElementById('form');
+    form.addEventListener('keypress', function(e) {
+        if (e.keyCode === 13) {
+        e.preventDefault();
+        }
+    });
 </script>
 
 <script type="text/javascript" src="/js/carregador.js"></script>

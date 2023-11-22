@@ -10,7 +10,11 @@
     </div>
 </div>
 
-<form action="/atualiza-pcp/<%=camposPcp.id%>" method="post">
+<%if(camposVazios || logado.setor != 'pcp'){%>
+    <h2 style="text-align: center;" class="mt-4">Existem campos vazios para o EDP preencher ou esse usuários não é do PCP.</h2>
+<%}else{%>
+
+<form action="/atualiza-pcp/<%=camposPcp.id%>" method="post" id="form">
 <div class="row">
     <div class="col">
         <div class="form-floating">
@@ -60,6 +64,7 @@
 </div>
 
 </form>
+<%}%>
 
 <script type="text/javascript">
     if("<%=camposPcp.pcp_odf_retrabalho%>" != ""){
@@ -77,6 +82,13 @@
     if("<%=camposPcp.pcp_obs%>" != ""){
         document.getElementById("pcp_obs").readOnly = true;
     }
+
+    const form = document.getElementById('form');
+    form.addEventListener('keypress', function(e) {
+        if (e.keyCode === 13) {
+        e.preventDefault();
+        }
+    });
 
 
 </script>
